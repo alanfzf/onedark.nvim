@@ -45,6 +45,31 @@
 local lush = require("lush")
 local hsl = lush.hsl
 
+local hsl = lush.hsl
+local hsluv = lush.hsluv
+
+local colors = {
+	red = hsl("#E06C75"),
+	dark_red = hsl("#BE5046"),
+	green = hsl("#98C379"),
+	yellow = hsl("#E5C07B"),
+	dark_yellow = hsl("#D19A66"),
+	blue = hsl("#61AFEF"),
+	purple = hsl("#C678DD"),
+	cyan = hsl("#56B6C2"),
+	white = hsl("#ABB2BF"),
+	black = hsl("#282C34"),
+	comment_grey = hsl("#5C6370"),
+	gutter_fg_grey = hsl("#4B5263"),
+	cursor_grey = hsl("#2C323C"),
+	visual_grey = hsl("#3E4452"),
+	special_grey = hsl("#3B4048"),
+}
+
+
+
+
+-- stylua: ignore start
 local theme = lush(function(injected_functions)
 	local sym = injected_functions.sym
 	return {
@@ -58,7 +83,7 @@ local theme = lush(function(injected_functions)
 		--
 		-- See :h highlight-groups
 		--
-		-- ColorColumn    { }, -- Columns set with 'colorcolumn'
+		ColorColumn    { fg=colors.cursor_grey}, -- Columns set with 'colorcolumn'
 		-- Conceal        { }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
 		-- Cursor         { }, -- Character under the cursor
 		-- CurSearch      { }, -- Highlighting a search pattern under the cursor (see 'hlsearch')
@@ -66,16 +91,16 @@ local theme = lush(function(injected_functions)
 		-- CursorIM       { }, -- Like Cursor, but used when in IME mode |CursorIM|
 		-- CursorColumn   { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
 		-- CursorLine     { }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-		-- Directory      { }, -- Directory names (and other special names in listings)
-		-- DiffAdd        { }, -- Diff mode: Added line |diff.txt|
-		-- DiffChange     { }, -- Diff mode: Changed line |diff.txt|
-		-- DiffDelete     { }, -- Diff mode: Deleted line |diff.txt|
-		-- DiffText       { }, -- Diff mode: Changed text within a changed line |diff.txt|
+		Directory      { fg=colors.blue}, -- Directory names (and other special names in listings)
+		DiffAdd        { fg=colors.green}, -- Diff mode: Added line |diff.txt|
+		DiffChange     { fg=colors.yellow }, -- Diff mode: Changed line |diff.txt|
+		DiffDelete     { fg=colors.red }, -- Diff mode: Deleted line |diff.txt|
+		DiffText       { fg=colors.yellow }, -- Diff mode: Changed text within a changed line |diff.txt|
 		-- EndOfBuffer    { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
 		-- TermCursor     { }, -- Cursor in a focused terminal
 		-- TermCursorNC   { }, -- Cursor in an unfocused terminal
-		-- ErrorMsg       { }, -- Error messages on the command line
-		-- VertSplit      { }, -- Column separating vertically split windows
+		ErrorMsg       { fg=colors.red}, -- Error messages on the command line
+		VertSplit      { fg=colors.visual_grey}, -- Column separating vertically split windows
 		-- Folded         { }, -- Line used for closed folds
 		-- FoldColumn     { }, -- 'foldcolumn'
 		-- SignColumn     { }, -- Column where |signs| are displayed
@@ -91,12 +116,12 @@ local theme = lush(function(injected_functions)
 		-- ModeMsg        { }, -- 'showmode' message (e.g., "-- INSERT -- ")
 		-- MsgArea        { }, -- Area for messages and cmdline
 		-- MsgSeparator   { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
-		-- MoreMsg        { }, -- |more-prompt|
+		MoreMsg        { fg=colors.purple}, -- |more-prompt|
 		-- NonText        { }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-		-- Normal         { }, -- Normal text
-		-- NormalFloat    { }, -- Normal text in floating windows.
+		Normal         { fg=colors.white, bg=colors.black}, -- Normal text
+		NormalFloat    { Normal }, -- Normal text in floating windows.
 		-- FloatBorder    { }, -- Border of floating windows.
-		-- FloatTitle     { }, -- Title of floating windows.
+		FloatTitle     { fg=colors.red}, -- Title of floating windows.
 		-- NormalNC       { }, -- normal text in non-current windows
 		-- Pmenu          { }, -- Popup menu: Normal item.
 		-- PmenuSel       { }, -- Popup menu: Selected item.
@@ -119,10 +144,10 @@ local theme = lush(function(injected_functions)
 		-- TabLine        { }, -- Tab pages line, not active tab page label
 		-- TabLineFill    { }, -- Tab pages line, where there are no labels
 		-- TabLineSel     { }, -- Tab pages line, active tab page label
-		-- Title          { }, -- Titles for output from ":set all", ":autocmd" etc.
+		Title          { fg=colors.red}, -- Titles for output from ":set all", ":autocmd" etc.
 		-- Visual         { }, -- Visual mode selection
 		-- VisualNOS      { }, -- Visual mode selection when vim is "Not Owning the Selection".
-		-- WarningMsg     { }, -- Warning messages
+		WarningMsg     { fg=colors.yellow}, -- Warning messages
 		-- Whitespace     { }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
 		-- Winseparator   { }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
 		-- WildMenu       { }, -- Current match in 'wildmenu' completion
@@ -137,48 +162,48 @@ local theme = lush(function(injected_functions)
 		--
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
-		-- Comment        { }, -- Any comment
+		Comment        { fg=colors.comment_grey}, -- Any comment
 
-		-- Constant       { }, -- (*) Any constant
-		-- String         { }, --   A string constant: "this is a string"
-		-- Character      { }, --   A character constant: 'c', '\n'
-		-- Number         { }, --   A number constant: 234, 0xff
-		-- Boolean        { }, --   A boolean constant: TRUE, false
-		-- Float          { }, --   A floating point constant: 2.3e10
+		Constant       { fg=colors.cyan}, -- (*) Any constant
+		String         { fg=colors.green}, --   A string constant: "this is a string"
+		Character      { fg=colors.green}, --   A character constant: 'c', '\n'
+		Number         { fg=colors.dark_yellow}, --   A number constant: 234, 0xff
+		Boolean        { fg=colors.dark_yellow}, --   A boolean constant: TRUE, false
+		Float          { fg=colors.dark_yellow}, --   A floating point constant: 2.3e10
 
-		-- Identifier     { }, -- (*) Any variable name
-		-- Function       { }, --   Function name (also: methods for classes)
+		Identifier     { fg=colors.white}, -- (*) Any variable name
+		Function       { fg=colors.blue}, --   Function name (also: methods for classes)
 
-		-- Statement      { }, -- (*) Any statement
-		-- Conditional    { }, --   if, then, else, endif, switch, etc.
-		-- Repeat         { }, --   for, do, while, etc.
-		-- Label          { }, --   case, default, etc.
-		-- Operator       { }, --   "sizeof", "+", "*", etc.
-		-- Keyword        { }, --   any other keyword
-		-- Exception      { }, --   try, catch, throw
+		Statement      { fg=colors.purple}, -- (*) Any statement
+		Conditional    { fg=colors.purple}, --   if, then, else, endif, switch, etc.
+		Repeat         { fg=colors.purple}, --   for, do, while, etc.
+		Label          { fg=colors.purple}, --   case, default, etc.
+		Operator       { fg=colors.purple}, --   "sizeof", "+", "*", etc.
+		Keyword        { fg=colors.purple}, --   any other keyword
+		Exception      { fg=colors.purple}, --   try, catch, throw
 
-		-- PreProc        { }, -- (*) Generic Preprocessor
-		-- Include        { }, --   Preprocessor #include
-		-- Define         { }, --   Preprocessor #define
-		-- Macro          { }, --   Same as Define
-		-- PreCondit      { }, --   Preprocessor #if, #else, #endif, etc.
+		PreProc        { fg=colors.yellow}, -- (*) Generic Preprocessor
+		Include        { fg=colors.blue}, --   Preprocessor #include
+		Define         { fg=colors.purple}, --   Preprocessor #define
+		Macro          { fg=colors.purple}, --   Same as Define
+		PreCondit      { fg=colors.yellow}, --   Preprocessor #if, #else, #endif, etc.
 
-		-- Type           { }, -- (*) int, long, char, etc.
-		-- StorageClass   { }, --   static, register, volatile, etc.
-		-- Structure      { }, --   struct, union, enum, etc.
-		-- Typedef        { }, --   A typedef
+		Type           { fg=colors.yellow}, -- (*) int, long, char, etc.
+		StorageClass   { fg=colors.yellow}, --   static, register, volatile, etc.
+		Structure      { fg=colors.yellow}, --   struct, union, enum, etc.
+		Typedef        { fg=colors.yellow}, --   A typedef
 
-		-- Special        { }, -- (*) Any special symbol
-		-- SpecialChar    { }, --   Special character in a constant
-		-- Tag            { }, --   You can use CTRL-] on this
-		-- Delimiter      { }, --   Character that needs attention
-		-- SpecialComment { }, --   Special things inside a comment (e.g. '\n')
-		-- Debug          { }, --   Debugging statements
+		Special        { fg=colors.blue}, -- (*) Any special symbol
+		SpecialChar    { fg=colors.dark_yellow}, --   Special character in a constant
+		Tag            { fg=colors.purple}, --   You can use CTRL-] on this
+		Delimiter      { fg=colors.comment_grey}, --   Character that needs attention
+		SpecialComment { fg=colors.comment_grey}, --   Special things inside a comment (e.g. '\n')
+		Debug          { fg=colors.red}, --   Debugging statements
 
 		-- Underlined     { gui = "underline" }, -- Text that stands out, HTML links
 		-- Ignore         { }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
-		-- Error          { }, -- Any erroneous construct
-		-- Todo           { }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+		Error          { fg=colors.red}, -- Any erroneous construct
+		Todo           { fg=colors.dark_yellow}, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
 		-- These groups are for the native LSP client and diagnostic system. Some
 		-- other LSP clients may use these groups, or use their own. Consult your
@@ -195,31 +220,31 @@ local theme = lush(function(injected_functions)
 
 		-- See :h diagnostic-highlights, some groups may not be listed, submit a PR fix to lush-template!
 		--
-		-- DiagnosticError            { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticWarn             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticInfo             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticHint             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticOk               { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticVirtualTextError { } , -- Used for "Error" diagnostic virtual text.
-		-- DiagnosticVirtualTextWarn  { } , -- Used for "Warn" diagnostic virtual text.
-		-- DiagnosticVirtualTextInfo  { } , -- Used for "Info" diagnostic virtual text.
-		-- DiagnosticVirtualTextHint  { } , -- Used for "Hint" diagnostic virtual text.
-		-- DiagnosticVirtualTextOk    { } , -- Used for "Ok" diagnostic virtual text.
-		-- DiagnosticUnderlineError   { } , -- Used to underline "Error" diagnostics.
-		-- DiagnosticUnderlineWarn    { } , -- Used to underline "Warn" diagnostics.
-		-- DiagnosticUnderlineInfo    { } , -- Used to underline "Info" diagnostics.
-		-- DiagnosticUnderlineHint    { } , -- Used to underline "Hint" diagnostics.
-		-- DiagnosticUnderlineOk      { } , -- Used to underline "Ok" diagnostics.
-		-- DiagnosticFloatingError    { } , -- Used to color "Error" diagnostic messages in diagnostics float. See |vim.diagnostic.open_float()|
-		-- DiagnosticFloatingWarn     { } , -- Used to color "Warn" diagnostic messages in diagnostics float.
-		-- DiagnosticFloatingInfo     { } , -- Used to color "Info" diagnostic messages in diagnostics float.
-		-- DiagnosticFloatingHint     { } , -- Used to color "Hint" diagnostic messages in diagnostics float.
-		-- DiagnosticFloatingOk       { } , -- Used to color "Ok" diagnostic messages in diagnostics float.
-		-- DiagnosticSignError        { } , -- Used for "Error" signs in sign column.
-		-- DiagnosticSignWarn         { } , -- Used for "Warn" signs in sign column.
-		-- DiagnosticSignInfo         { } , -- Used for "Info" signs in sign column.
-		-- DiagnosticSignHint         { } , -- Used for "Hint" signs in sign column.
-		-- DiagnosticSignOk           { } , -- Used for "Ok" signs in sign column.
+		DiagnosticError            { fg=colors.red                           }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticWarn             { fg=colors.yellow                        }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticInfo             { fg=colors.blue                          }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticHint             { fg=colors.cyan                          }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticOk               { fg=colors.green                         }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticVirtualTextError { fg=colors.red, bg=colors.visual_grey    }, -- Used for "Error" diagnostic virtual text.
+		DiagnosticVirtualTextWarn  { fg=colors.yellow, bg=colors.visual_grey }, -- Used for "Warn" diagnostic virtual text.
+		DiagnosticVirtualTextInfo  { fg=colors.blue, bg=colors.visual_grey   }, -- Used for "Info" diagnostic virtual text.
+		DiagnosticVirtualTextHint  { fg=colors.cyan, bg=colors.visual_grey   }, -- Used for "Hint" diagnostic virtual text.
+		DiagnosticVirtualTextOk    { fg=colors.green, bg=colors.visual_grey  }, -- Used for "Ok" diagnostic virtual text.
+		DiagnosticUnderlineError   { DiagnosticError                         }, -- Used to underline "Error" diagnostics.
+		DiagnosticUnderlineWarn    { DiagnosticWarn                          }, -- Used to underline "Warn" diagnostics.
+		DiagnosticUnderlineInfo    { DiagnosticInfo                          }, -- Used to underline "Info" diagnostics.
+		DiagnosticUnderlineHint    { DiagnosticHint                          }, -- Used to underline "Hint" diagnostics.
+		DiagnosticUnderlineOk      { DiagnosticOk                            }, -- Used to underline "Ok" diagnostics.
+		DiagnosticFloatingError    { DiagnosticError                         }, -- Used to color "Error" diagnostic messages in diagnostics float. See |vim.diagnostic.open_float()|
+		DiagnosticFloatingWarn     { DiagnosticWarn                          }, -- Used to color "Warn" diagnostic messages in diagnostics float.
+		DiagnosticFloatingInfo     { DiagnosticInfo                          }, -- Used to color "Info" diagnostic messages in diagnostics float.
+		DiagnosticFloatingHint     { DiagnosticHint                          }, -- Used to color "Hint" diagnostic messages in diagnostics float.
+		DiagnosticFloatingOk       { DiagnosticOk                            }, -- Used to color "Ok" diagnostic messages in diagnostics float.
+		DiagnosticSignError        { DiagnosticError                         }, -- Used for "Error" signs in sign column.
+		DiagnosticSignWarn         { DiagnosticWarn                          }, -- Used for "Warn" signs in sign column.
+		DiagnosticSignInfo         { DiagnosticInfo                          }, -- Used for "Info" signs in sign column.
+		DiagnosticSignHint         { DiagnosticHint                          }, -- Used for "Hint" signs in sign column.
+		DiagnosticSignOk           { DiagnosticOk                            }, -- Used for "Ok" signs in sign column.
 
 		-- Tree-Sitter syntax groups.
 		--
@@ -238,53 +263,55 @@ local theme = lush(function(injected_functions)
 		--
 		-- For more information see https://github.com/rktjmp/lush.nvim/issues/109
 
-		-- sym"@text.literal"      { }, -- Comment
-		-- sym"@text.reference"    { }, -- Identifier
-		-- sym"@text.title"        { }, -- Title
-		-- sym"@text.uri"          { }, -- Underlined
-		-- sym"@text.underline"    { }, -- Underlined
-		-- sym"@text.todo"         { }, -- Todo
-		-- sym"@comment"           { }, -- Comment
-		-- sym"@punctuation"       { }, -- Delimiter
-		-- sym"@constant"          { }, -- Constant
-		-- sym"@constant.builtin"  { }, -- Special
-		-- sym"@constant.macro"    { }, -- Define
-		-- sym"@define"            { }, -- Define
-		-- sym"@macro"             { }, -- Macro
-		-- sym"@string"            { }, -- String
-		-- sym"@string.escape"     { }, -- SpecialChar
-		-- sym"@string.special"    { }, -- SpecialChar
-		-- sym"@character"         { }, -- Character
-		-- sym"@character.special" { }, -- SpecialChar
-		-- sym"@number"            { }, -- Number
-		-- sym"@boolean"           { }, -- Boolean
-		-- sym"@float"             { }, -- Float
-		-- sym"@function"          { }, -- Function
-		-- sym"@function.builtin"  { }, -- Special
-		-- sym"@function.macro"    { }, -- Macro
-		-- sym"@parameter"         { }, -- Identifier
-		-- sym"@method"            { }, -- Function
-		-- sym"@field"             { }, -- Identifier
-		-- sym"@property"          { }, -- Identifier
-		-- sym"@constructor"       { }, -- Special
-		-- sym"@conditional"       { }, -- Conditional
-		-- sym"@repeat"            { }, -- Repeat
-		-- sym"@label"             { }, -- Label
-		-- sym"@operator"          { }, -- Operator
-		-- sym"@keyword"           { }, -- Keyword
-		-- sym"@exception"         { }, -- Exception
-		-- sym"@variable"          { }, -- Identifier
-		-- sym"@type"              { }, -- Type
-		-- sym"@type.definition"   { }, -- Typedef
-		-- sym"@storageclass"      { }, -- StorageClass
-		-- sym"@structure"         { }, -- Structure
-		-- sym"@namespace"         { }, -- Identifier
-		-- sym"@include"           { }, -- Include
-		-- sym"@preproc"           { }, -- PreProc
-		-- sym"@debug"             { }, -- Debug
-		-- sym"@tag"               { }, -- Tag
+		sym"@text.literal"      { Comment}, -- Comment
+		sym"@text.reference"    { Identifier}, -- Identifier
+		sym"@text.title"        { Title }, -- Title
+		sym"@text.uri"          { gui=""}, -- Underlined
+		sym"@text.underline"    { gui="" }, -- Underlined
+		sym"@text.todo"         { Todo }, -- Todo
+		sym"@comment"           { Comment }, -- Comment
+		sym"@punctuation"       { Delimiter }, -- Delimiter
+		sym"@constant"          { Constant}, -- Constant
+		sym"@constant.builtin"  { Special }, -- Special
+		sym"@constant.macro"    { Define }, -- Define
+		sym"@define"            { Define}, -- Define
+		sym"@macro"             { Macro}, -- Macro
+		sym"@string"            { String }, -- String
+		sym"@string.escape"     { SpecialChar}, -- SpecialChar
+		sym"@string.special"    { SpecialChar}, -- SpecialChar
+		sym"@character"         { Character}, -- Character
+		sym"@character.special" { SpecialChar }, -- SpecialChar
+		sym"@number"            { Number }, -- Number
+		sym"@boolean"           { Boolean}, -- Boolean
+		sym"@float"             { Float}, -- Float
+		sym"@function"          { Function}, -- Function
+		sym"@function.builtin"  { Special}, -- Special
+		sym"@function.macro"    { Macro}, -- Macro
+		sym"@parameter"         { Identifier}, -- Identifier
+		sym"@method"            { Function}, -- Function
+		sym"@field"             { Identifier}, -- Identifier
+		sym"@property"          { Identifier}, -- Identifier
+		sym"@constructor"       { Special}, -- Special
+		sym"@conditional"       { Conditional}, -- Conditional
+		sym"@repeat"            { Repeat}, -- Repeat
+		sym"@label"             { Label}, -- Label
+		sym"@operator"          { Operator}, -- Operator
+		sym"@keyword"           { Keyword}, -- Keyword
+		sym"@exception"         { }, -- Exception
+		sym"@variable"        { Identifier }, -- Identifier
+		sym"@variable.member" { fg=colors.red}, -- Identifier
+		sym"@type"            { Type}, -- Type
+		sym"@type.definition" { Typedef}, -- Typedef
+		sym"@storageclass"    { StorageClass}, -- StorageClass
+		sym"@structure"       { Structure}, -- Structure
+		sym"@namespace"       { Identifier}, -- Identifier
+		sym"@include"         { Include}, -- Include
+		sym"@preproc"         { PreProc}, -- PreProc
+		sym"@debug"           { Debug}, -- Debug
+		sym"@tag"             { Tag}, -- Tag
 	}
 end)
+-- stylua: ignore end
 
 -- Return our parsed theme for extension or use elsewhere.
 return theme
