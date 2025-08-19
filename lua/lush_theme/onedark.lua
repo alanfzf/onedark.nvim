@@ -84,73 +84,73 @@ local theme = lush(function(injected_functions)
 		-- See :h highlight-groups
 		--
 		ColorColumn    { fg=colors.cursor_grey}, -- Columns set with 'colorcolumn'
-		-- Conceal        { }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
-		-- Cursor         { }, -- Character under the cursor
+		Conceal        { fg=colors.blue }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
+		Cursor         { fg=colors.black, bg=colors.blue }, -- Character under the cursor
 		-- CurSearch      { }, -- Highlighting a search pattern under the cursor (see 'hlsearch')
 		-- lCursor        { }, -- Character under the cursor when |language-mapping| is used (see 'guicursor')
 		-- CursorIM       { }, -- Like Cursor, but used when in IME mode |CursorIM|
-		-- CursorColumn   { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
-		-- CursorLine     { }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
+		CursorColumn   { bg=colors.cursor_grey}, -- Screen-column at the cursor, when 'cursorcolumn' is set.
+		CursorLine     {}, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
 		Directory      { fg=colors.blue}, -- Directory names (and other special names in listings)
 		DiffAdd        { fg=colors.green}, -- Diff mode: Added line |diff.txt|
 		DiffChange     { fg=colors.yellow }, -- Diff mode: Changed line |diff.txt|
 		DiffDelete     { fg=colors.red }, -- Diff mode: Deleted line |diff.txt|
 		DiffText       { fg=colors.yellow }, -- Diff mode: Changed text within a changed line |diff.txt|
 		-- EndOfBuffer    { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
-		-- TermCursor     { }, -- Cursor in a focused terminal
-		-- TermCursorNC   { }, -- Cursor in an unfocused terminal
+		TermCursor     { Cursor }, -- Cursor in a focused terminal
+		TermCursorNC   { Cursor }, -- Cursor in an unfocused terminal
 		ErrorMsg       { fg=colors.red}, -- Error messages on the command line
 		VertSplit      { fg=colors.visual_grey}, -- Column separating vertically split windows
-		-- Folded         { }, -- Line used for closed folds
+		Folded         { fg=colors.comment_grey}, -- Line used for closed folds
 		-- FoldColumn     { }, -- 'foldcolumn'
 		-- SignColumn     { }, -- Column where |signs| are displayed
-		-- IncSearch      { }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
+		IncSearch      { fg=colors.yellow, bg=colors.comment_grey }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
 		-- Substitute     { }, -- |:substitute| replacement text highlighting
-		-- LineNr         { }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+		LineNr         { fg=colors.gutter_fg_grey }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		-- LineNrAbove    { }, -- Line number for when the 'relativenumber' option is set, above the cursor line
 		-- LineNrBelow    { }, -- Line number for when the 'relativenumber' option is set, below the cursor line
 		-- CursorLineNr   { }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
 		-- CursorLineFold { }, -- Like FoldColumn when 'cursorline' is set for the cursor line
 		-- CursorLineSign { }, -- Like SignColumn when 'cursorline' is set for the cursor line
-		-- MatchParen     { }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-		-- ModeMsg        { }, -- 'showmode' message (e.g., "-- INSERT -- ")
+		MatchParen     { fg=colors.blue, gui='underline'}, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+		ModeMsg        { fg=colors.purple}, -- 'showmode' message (e.g., "-- INSERT -- ")
 		-- MsgArea        { }, -- Area for messages and cmdline
 		-- MsgSeparator   { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
 		MoreMsg        { fg=colors.purple}, -- |more-prompt|
-		-- NonText        { }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+		NonText        { fg=colors.special_grey}, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
 		Normal         { fg=colors.white, bg=colors.black}, -- Normal text
 		NormalFloat    { Normal }, -- Normal text in floating windows.
 		-- FloatBorder    { }, -- Border of floating windows.
 		FloatTitle     { fg=colors.red}, -- Title of floating windows.
-		-- NormalNC       { }, -- normal text in non-current windows
-		-- Pmenu          { }, -- Popup menu: Normal item.
-		-- PmenuSel       { }, -- Popup menu: Selected item.
+		NormalNC       { Normal }, -- normal text in non-current windows
+		Pmenu          { fg=colors.white, bg=colors.menu_grey}, -- Popup menu: Normal item.
+		PmenuSel       { fg=colors.cursor_grey, bg=colors.white}, -- Popup menu: Selected item.
 		-- PmenuKind      { }, -- Popup menu: Normal item "kind"
 		-- PmenuKindSel   { }, -- Popup menu: Selected item "kind"
 		-- PmenuExtra     { }, -- Popup menu: Normal item "extra text"
 		-- PmenuExtraSel  { }, -- Popup menu: Selected item "extra text"
-		-- PmenuSbar      { }, -- Popup menu: Scrollbar.
-		-- PmenuThumb     { }, -- Popup menu: Thumb of the scrollbar.
-		-- Question       { }, -- |hit-enter| prompt and yes/no questions
-		-- QuickFixLine   { }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
-		-- Search         { }, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
-		-- SpecialKey     { }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
+		PmenuSbar      { bg=colors.cursor_grey}, -- Popup menu: Scrollbar.
+		PmenuThumb     { bg=colors.white}, -- Popup menu: Thumb of the scrollbar.
+		Question       { fg=colors.purple}, -- |hit-enter| prompt and yes/no questions
+		QuickFixLine   { fg=colors.black, bg=colors.yellow}, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
+		Search         { fg=colors.black, bg=colors.yellow}, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
+		SpecialKey     { fg=colors.green}, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
 		-- SpellBad       { }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
 		-- SpellCap       { }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
 		-- SpellLocal     { }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
 		-- SpellRare      { }, -- Word that is recognized by the spellchecker as one that is hardly ever used. |spell| Combined with the highlighting used otherwise.
-		-- StatusLine     { }, -- Status line of current window
-		-- StatusLineNC   { }, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-		-- TabLine        { }, -- Tab pages line, not active tab page label
-		-- TabLineFill    { }, -- Tab pages line, where there are no labels
-		-- TabLineSel     { }, -- Tab pages line, active tab page label
-		Title          { fg=colors.red}, -- Titles for output from ":set all", ":autocmd" etc.
-		-- Visual         { }, -- Visual mode selection
-		-- VisualNOS      { }, -- Visual mode selection when vim is "Not Owning the Selection".
+		StatusLine   { fg=colors.white, bg=colors.cursor_grey }, -- Status line of current window
+		StatusLineNC { StatusLine                             }, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
+		TabLine      { fg=colors.white, bg=colors.cursor_grey }, -- Tab pages line, not active tab page label
+		TabLineFill  { bg=colors.black                        }, -- Tab pages line, where there are no labels
+		TabLineSel   { fg=colors.white, bg=colors.visual_grey }, -- Tab pages line, active tab page label
+		Title        { fg=colors.red                          }, -- Titles for output from ":set all", ":autocmd" etc.
+		Visual         {bg=colors.visual_grey}, -- Visual mode selection
+		VisualNOS      { Visual}, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg     { fg=colors.yellow}, -- Warning messages
 		-- Whitespace     { }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
 		-- Winseparator   { }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
-		-- WildMenu       { }, -- Current match in 'wildmenu' completion
+		WildMenu       { fg=colors.black, bg=colors.blue }, -- Current match in 'wildmenu' completion
 		-- WinBar         { }, -- Window bar of current window
 		-- WinBarNC       { }, -- Window bar of not-current windows
 
@@ -200,7 +200,7 @@ local theme = lush(function(injected_functions)
 		SpecialComment { fg=colors.comment_grey}, --   Special things inside a comment (e.g. '\n')
 		Debug          { fg=colors.red}, --   Debugging statements
 
-		-- Underlined     { gui = "underline" }, -- Text that stands out, HTML links
+		Underlined     { gui = "" }, -- Text that stands out, HTML links
 		-- Ignore         { }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
 		Error          { fg=colors.red}, -- Any erroneous construct
 		Todo           { fg=colors.dark_yellow}, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
@@ -263,52 +263,57 @@ local theme = lush(function(injected_functions)
 		--
 		-- For more information see https://github.com/rktjmp/lush.nvim/issues/109
 
-		sym"@text.literal"      { Comment}, -- Comment
-		sym"@text.reference"    { Identifier}, -- Identifier
-		sym"@text.title"        { Title }, -- Title
-		sym"@text.uri"          { gui=""}, -- Underlined
-		sym"@text.underline"    { gui="" }, -- Underlined
-		sym"@text.todo"         { Todo }, -- Todo
-		sym"@comment"           { Comment }, -- Comment
-		sym"@punctuation"       { Delimiter }, -- Delimiter
-		sym"@constant"          { Constant}, -- Constant
-		sym"@constant.builtin"  { Special }, -- Special
-		sym"@constant.macro"    { Define }, -- Define
-		sym"@define"            { Define}, -- Define
-		sym"@macro"             { Macro}, -- Macro
-		sym"@string"            { String }, -- String
-		sym"@string.escape"     { SpecialChar}, -- SpecialChar
-		sym"@string.special"    { SpecialChar}, -- SpecialChar
-		sym"@character"         { Character}, -- Character
-		sym"@character.special" { SpecialChar }, -- SpecialChar
-		sym"@number"            { Number }, -- Number
-		sym"@boolean"           { Boolean}, -- Boolean
-		sym"@float"             { Float}, -- Float
-		sym"@function"          { Function}, -- Function
-		sym"@function.builtin"  { Special}, -- Special
-		sym"@function.macro"    { Macro}, -- Macro
-		sym"@parameter"         { Identifier}, -- Identifier
-		sym"@method"            { Function}, -- Function
-		sym"@field"             { Identifier}, -- Identifier
-		sym"@property"          { Identifier}, -- Identifier
-		sym"@constructor"       { Special}, -- Special
-		sym"@conditional"       { Conditional}, -- Conditional
-		sym"@repeat"            { Repeat}, -- Repeat
-		sym"@label"             { Label}, -- Label
-		sym"@operator"          { Operator}, -- Operator
-		sym"@keyword"           { Keyword}, -- Keyword
-		sym"@exception"         { }, -- Exception
-		sym"@variable"        { Identifier }, -- Identifier
-		sym"@variable.member" { fg=colors.red}, -- Identifier
-		sym"@type"            { Type}, -- Type
-		sym"@type.definition" { Typedef}, -- Typedef
-		sym"@storageclass"    { StorageClass}, -- StorageClass
-		sym"@structure"       { Structure}, -- Structure
-		sym"@namespace"       { Identifier}, -- Identifier
-		sym"@include"         { Include}, -- Include
-		sym"@preproc"         { PreProc}, -- PreProc
-		sym"@debug"           { Debug}, -- Debug
-		sym"@tag"             { Tag}, -- Tag
+		sym"@text.literal"      { Comment       }, -- Comment
+		sym"@text.reference"    { Identifier    }, -- Identifier
+		sym"@text.title"        { Title         }, -- Title
+		sym"@text.uri"          { gui=""        }, -- Underlined
+		sym"@text.underline"    { gui=""        }, -- Underlined
+		sym"@text.todo"         { Todo          }, -- Todo
+		sym"@comment"           { Comment       }, -- Comment
+		sym"@punctuation"       { Delimiter     }, -- Delimiter
+		sym"@constant"          { Constant      }, -- Constant
+		sym"@constant.builtin"  { Special       }, -- Special
+		sym"@constant.macro"    { Define        }, -- Define
+		sym"@define"            { Define        }, -- Define
+		sym"@macro"             { Macro         }, -- Macro
+		sym"@string"            { String        }, -- String
+		sym"@string.escape"     { SpecialChar   }, -- SpecialChar
+		sym"@string.special"    { SpecialChar   }, -- SpecialChar
+		sym"@character"         { Character     }, -- Character
+		sym"@character.special" { SpecialChar   }, -- SpecialChar
+		sym"@number"            { Number        }, -- Number
+		sym"@boolean"           { Boolean       }, -- Boolean
+		sym"@float"             { Float         }, -- Float
+		sym"@function"          { Function      }, -- Function
+		sym"@function.builtin"  { Special       }, -- Special
+		sym"@function.macro"    { Macro         }, -- Macro
+		sym"@parameter"         { Identifier    }, -- Identifier
+		sym"@method"            { Function      }, -- Function
+		sym"@field"             { Identifier    }, -- Identifier
+		sym"@property"          { Identifier    }, -- Identifier
+		sym"@constructor"       { Special       }, -- Special
+		sym"@conditional"       { Conditional   }, -- Conditional
+		sym"@repeat"            { Repeat        }, -- Repeat
+		sym"@label"             { Label         }, -- Label
+		sym"@operator"          { Operator      }, -- Operator
+		sym"@keyword"           { Keyword       }, -- Keyword
+		sym"@exception"         { Exception     }, -- Exception
+		sym"@variable"          { Identifier    }, -- Identifier
+		sym"@variable.member"   { fg=colors.red }, -- Identifier
+		sym"@type"              { Type          }, -- Type
+		sym"@type.definition"   { Typedef       }, -- Typedef
+		sym"@storageclass"      { StorageClass  }, -- StorageClass
+		sym"@structure"         { Structure     }, -- Structure
+		sym"@namespace"         { Identifier    }, -- Identifier
+		sym"@include"           { Include       }, -- Include
+		sym"@preproc"           { PreProc       }, -- PreProc
+		sym"@debug"             { Debug         }, -- Debug
+		sym"@tag"               { Tag           }, -- Tag
+
+        -- html
+        sym"@tag.delimiter.html" { Delimiter },
+        sym"@tag.html"           { fg=colors.red},
+        sym"@tag.attribute.html" { fg=colors.yellow}
 	}
 end)
 -- stylua: ignore end
