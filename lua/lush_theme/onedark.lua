@@ -49,27 +49,28 @@ local hsl = lush.hsl
 local hsluv = lush.hsluv
 
 local colors = {
-	red = hsl("#E06C75"),
-	dark_red = hsl("#BE5046"),
-	green = hsl("#98C379"),
-	yellow = hsl("#E5C07B"),
-	dark_yellow = hsl("#D19A66"),
-	blue = hsl("#61AFEF"),
-	purple = hsl("#C678DD"),
-	cyan = hsl("#56B6C2"),
-	white = hsl("#ABB2BF"),
-	black = hsl("#282C34"),
-	comment_grey = hsl("#5C6370"),
-	gutter_fg_grey = hsl("#4B5263"),
-	cursor_grey = hsl("#2C323C"),
-	visual_grey = hsl("#3E4452"),
-	special_grey = hsl("#3B4048"),
+	red = hsluv("#E06C75"),
+	dark_red = hsluv("#BE5046"),
+	green = hsluv("#98C379"),
+	yellow = hsluv("#E5C07B"),
+	dark_yellow = hsluv("#D19A66"),
+	blue = hsluv("#61AFEF"),
+	purple = hsluv("#C678DD"),
+	cyan = hsluv("#56B6C2"),
+	white = hsluv("#ABB2BF"),
+	black = hsluv("#282C34"),
+	comment_grey = hsluv("#5C6370"),
+	gutter_fg_grey = hsluv("#4B5263"),
+	cursor_grey = hsluv("#2C323C"),
+	visual_grey = hsluv("#3E4452"),
+	special_grey = hsluv("#3B4048"),
 }
 
 
 
 
 -- stylua: ignore start
+---@diagnostic disable: undefined-global
 local theme = lush(function(injected_functions)
 	local sym = injected_functions.sym
 	return {
@@ -92,10 +93,10 @@ local theme = lush(function(injected_functions)
 		CursorColumn   { bg=colors.cursor_grey}, -- Screen-column at the cursor, when 'cursorcolumn' is set.
 		CursorLine     {}, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
 		Directory      { fg=colors.blue}, -- Directory names (and other special names in listings)
-		DiffAdd        { fg=colors.green}, -- Diff mode: Added line |diff.txt|
-		DiffChange     { fg=colors.yellow }, -- Diff mode: Changed line |diff.txt|
-		DiffDelete     { fg=colors.red }, -- Diff mode: Deleted line |diff.txt|
-		DiffText       { fg=colors.yellow }, -- Diff mode: Changed text within a changed line |diff.txt|
+		DiffAdd        { bg=colors.green.de(60).da(65)}, -- Diff mode: Added line |diff.txt|
+		DiffChange     { bg=colors.yellow.de(60).da(65)}, -- Diff mode: Changed line |diff.txt|
+		DiffDelete     { bg=colors.red.de(60).da(65) }, -- Diff mode: Deleted line |diff.txt|
+		DiffText       { gui="italic+bold", bg=colors.yellow.de(60).da(77)}, -- Diff mode: Changed text within a changed line |diff.txt|
 		-- EndOfBuffer    { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
 		TermCursor     { Cursor }, -- Cursor in a focused terminal
 		TermCursorNC   { Cursor }, -- Cursor in an unfocused terminal
